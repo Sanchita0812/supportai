@@ -6,6 +6,30 @@ import SendIcon from '@mui/icons-material/Send'
 import CircularProgress from '@mui/material/CircularProgress'
 import { styled } from '@mui/system'
 
+// Custom styled components
+const GradientBox = styled(Box)({
+  background: 'linear-gradient(135deg, #232526 0%, #414345 100%)',
+  borderRadius: '10px',
+  padding: '12px 24px',
+  color: '#fff',
+  textAlign: 'center',
+  marginBottom: '20px',
+})
+
+const MessageBubble = styled(Box)(({ role }) => ({
+  background: role === 'assistant' ? '#f0f0f0' : '#007aff',
+  color: role === 'assistant' ? '#333' : '#fff',
+  borderRadius: '18px',
+  padding: '14px 20px',
+  maxWidth: '70%',
+  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+  fontSize: '15px',
+  lineHeight: '1.5',
+  wordBreak: 'break-word',
+  alignSelf: role === 'assistant' ? 'flex-start' : 'flex-end',
+  margin: '4px 0',
+}))
+
 export default function Home() {
   const [messages, setMessages] = useState([
     {
@@ -50,7 +74,6 @@ export default function Home() {
         const text = decoder.decode(value, { stream: true })
         assistantContent += text
 
-        // Process the assistant's response
         const content = JSON.parse(assistantContent).content
         renderAssistantResponse(content)
       }
@@ -94,32 +117,6 @@ export default function Home() {
     scrollToBottom()
   }, [messages])
 
-  // Custom styled components
-  const GradientBox = styled(Box)({
-    background: 'linear-gradient(135deg, #3f51b5 30%, #2196f3 90%)',
-    borderRadius: '8px',
-    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-    padding: '10px 20px',
-    color: '#fff',
-    textAlign: 'center',
-  })
-
-  const MessageBubble = styled(Box)(({ role }) => ({
-    background: role === 'assistant' ? '#e3f2fd' : '#c5e1a5',
-    color: 'black',
-    borderRadius: '20px',
-    padding: '12px 20px',
-    maxWidth: '75%',
-    boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
-    fontSize: '16px',
-    lineHeight: '1.6',
-    wordBreak: 'break-word',
-    transition: 'background 0.3s ease',
-    ':hover': {
-      background: role === 'assistant' ? '#bbdefb' : '#aed581',
-    },
-  }))
-
   return (
     <Box
       width="100vw"
@@ -128,71 +125,58 @@ export default function Home() {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      bgcolor="#f3f4f6"
-      p={3}
+      sx={{
+        background: 'linear-gradient(135deg, #e0eafc, #cfdef3)',
+      }}
     >
       <Stack
         direction="column"
-        width={{ xs: '100%', sm: '500px' }}
-        height={{ xs: '100%', sm: '700px' }}
+        width={{ xs: '100%', sm: '450px', md: '600px' }}
+        height={{ xs: '100%', sm: '80%' }}
         borderRadius={4}
-        boxShadow="0 8px 24px rgba(0, 0, 0, 0.15)"
-        bgcolor="white"
-        p={3}
-        spacing={3}
+        boxShadow="0 8px 30px rgba(0, 0, 0, 0.2)"
+        bgcolor="#fff"
+        p={2}
+        spacing={2}
         position="relative"
       >
         <GradientBox>
-          <Typography variant="h5" fontWeight="bold">
+          <Typography variant="h5" fontWeight="bold" sx={{ fontSize: '1.25rem' }}>
             MED Support Assistant
           </Typography>
         </GradientBox>
 
         <Stack
           direction="column"
-          spacing={2}
+          spacing={1.5}
           flexGrow={1}
           overflow="auto"
           maxHeight="100%"
-          bgcolor="#fafafa"
           p={2}
           borderRadius={4}
           sx={{
             '&::-webkit-scrollbar': {
-              width: '8px',
+              width: '6px',
             },
             '&::-webkit-scrollbar-thumb': {
-              backgroundColor: '#bbb',
-              borderRadius: '4px',
+              backgroundColor: '#888',
+              borderRadius: '3px',
             },
             '&::-webkit-scrollbar-track': {
               backgroundColor: '#f1f1f1',
-              borderRadius: '4px',
+              borderRadius: '3px',
             },
           }}
         >
           {messages.map((message, index) => (
-            <Box
-              key={index}
-              display="flex"
-              justifyContent={
-                message.role === 'assistant' ? 'flex-start' : 'flex-end'
-              }
-              sx={{
-                animation: 'fadeIn 0.5s ease',
-                '@keyframes fadeIn': {
-                  from: { opacity: 0 },
-                  to: { opacity: 1 },
-                },
-              }}
-            >
-              <MessageBubble role={message.role}>{message.content}</MessageBubble>
-            </Box>
+            <MessageBubble key={index} role={message.role}>
+              {message.content}
+            </MessageBubble>
           ))}
           <div ref={messagesEndRef} />
         </Stack>
 
-        <Stack direction="row" spacing={2}>
+        <Stack direction="row" spacing={2} sx={{ padding: '0 10px' }}>
           <TextField
             label="Type your message..."
             variant="outlined"
@@ -203,21 +187,20 @@ export default function Home() {
             disabled={isLoading}
             InputProps={{
               style: {
-                borderRadius: '30px',
+                borderRadius: '20px',
                 backgroundColor: '#fff',
-                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)',
               },
             }}
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                  borderColor: '#2196f3',
+                  borderColor: '#ccc',
                 },
                 '&:hover fieldset': {
-                  borderColor: '#1976d2',
+                  borderColor: '#007aff',
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: '#1976d2',
+                  borderColor: '#007aff',
                 },
               },
             }}
@@ -228,17 +211,17 @@ export default function Home() {
             disabled={isLoading}
             endIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : <SendIcon />}
             sx={{
-              borderRadius: '30px',
-              bgcolor: 'linear-gradient(135deg, #3f51b5 30%, #2196f3 90%)',
+              borderRadius: '50%',
+              minWidth: '50px',
+              minHeight: '50px',
+              bgcolor: '#007aff',
               color: '#fff',
-              padding: '10px 20px',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
               ':hover': {
-                bgcolor: 'linear-gradient(135deg, #303f9f 30%, #1976d2 90%)',
+                bgcolor: '#005bb5',
               },
             }}
           >
-            {isLoading ? 'Sending...' : 'Send'}
+            {isLoading ? '' : <SendIcon />}
           </Button>
         </Stack>
       </Stack>
