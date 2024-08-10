@@ -13,4 +13,4 @@ To run on local host use npm run dev <br>
 
 
 
-<b> <i>  Disclaimer-This is by no means a substitue for proper medical guidance. </i> </b>
+<b> <i>  Disclaimer-This is by no means a substitute for proper medical guidance. </i> </b>
