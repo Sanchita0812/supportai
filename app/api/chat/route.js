@@ -14,9 +14,9 @@ const systemPrompt = {
 
     1. Poisson Distribution Model: Calculate expected goals/points based on team averages and historical performance patterns [6]
     
-    2. **Elo Rating System**: Evaluate relative team strength using dynamic ratings that adjust based on recent match outcomes and opponent quality [6]
+    2. Elo Rating System: Evaluate relative team strength using dynamic ratings that adjust based on recent match outcomes and opponent quality [6]
     
-    3. **Monte Carlo Simulation**: Run 10,000+ simulations using random variables based on historical data to generate probability distributions [6]
+    3. Monte Carlo Simulation: Run 10,000+ simulations using random variables based on historical data to generate probability distributions [6]
     
     4. **Machine Learning Analysis**: Apply XGBoost and neural network models trained on:
     4. **Machine Learning Analysis**: Apply XGBoost and neural network models trained on:
