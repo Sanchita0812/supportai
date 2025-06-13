@@ -142,7 +142,7 @@ export default function Home() {
       >
         <GradientBox>
           <Typography variant="h5" fontWeight="bold" sx={{ fontSize: '1.25rem' }}>
-            MED Support Assistant
+            Sport Support Assistant
           </Typography>
         </GradientBox>
 
